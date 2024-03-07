@@ -48,6 +48,7 @@ func RegisterGrpc(servername string, f func(server *grpc.Server)) error {
 		log.Fatalf("failed to listen: %v", err)
 		return err
 	}
+
 	err = config.RegisterConsul(servername, port)
 	if err != nil {
 		return err

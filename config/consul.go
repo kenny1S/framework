@@ -10,13 +10,15 @@ import (
 
 const Consul_Key = "consul_index"
 
-type Consul struct {
-	Ip   string `json:"Ip"`
-	Port string `json:"Port"`
+type Con struct {
+	Consul struct {
+		Ip   string `json:"Ip"`
+		Port string `json:"Port"`
+	} `json:"Consul"`
 }
 
-func getConfig(servername string) (*Consul, error) {
-	s := new(Consul)
+func getConfig(servername string) (*Con, error) {
+	s := new(Con)
 	config, err := GetConfig(servername, "DEFAULT_GROUP")
 	if err != nil {
 		return nil, err
@@ -46,13 +48,16 @@ func RegisterConsul(servername string, port int) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println(config.Consul.Ip, config.Consul.Port, 2342423423424324)
 	client, err := api.NewClient(&api.Config{
-		Address: fmt.Sprintf("%v:%v", config.Ip, config.Port),
+
+		Address: fmt.Sprintf("%v:%v", config.Consul.Ip, config.Consul.Port),
 	})
 	if err != nil {
 		return err
 	}
 	ip := GetIp()
+
 	err = client.Agent().ServiceRegister(&api.AgentServiceRegistration{
 		ID:      uuid.NewString(),
 		Name:    servername,
@@ -77,7 +82,7 @@ func AgentHealthService(servername string) (string, error) {
 		return "", err
 	}
 	client, err := api.NewClient(&api.Config{
-		Address: fmt.Sprintf("%v:%v", config.Ip, config.Port),
+		Address: fmt.Sprintf("%v:%v", config.Consul.Ip, config.Consul.Port),
 	})
 	if err != nil {
 		return "", err
