@@ -17,7 +17,7 @@ type Conf struct {
 	Grpc struct {
 		Ip   string `json:"Ip"`
 		Port string `json:"Port"`
-	} `json:"grpc"`
+	} `json:"Grpc"`
 }
 
 func getConfig(servername string) (*Conf, error) {
