@@ -1,12 +1,12 @@
 package config
 
 import (
-	"2108a/high-five/home/day12/framework/redis"
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/hashicorp/consul/api"
+	"github.com/kenny1S/framework/redis"
 	"net"
 	"strconv"
 	"time"

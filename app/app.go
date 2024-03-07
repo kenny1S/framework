@@ -1,8 +1,8 @@
 package app
 
 import (
-	"2108a/high-five/home/day12/framework/config"
-	"2108a/high-five/home/day12/framework/mysql"
+	"github.com/kenny1S/framework/config"
+	"github.com/kenny1S/framework/mysql"
 )
 
 func Init(servername, ip string, port int, data ...string) error {

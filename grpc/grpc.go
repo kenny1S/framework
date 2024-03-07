@@ -1,9 +1,9 @@
 package grpc
 
 import (
-	"2108a/high-five/home/day12/framework/config"
 	"encoding/json"
 	"fmt"
+	"github.com/kenny1S/framework/config"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
 	"google.golang.org/grpc/health/grpc_health_v1"
