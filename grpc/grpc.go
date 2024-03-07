@@ -42,7 +42,8 @@ func RegisterGrpc(servername string, f func(server *grpc.Server)) error {
 	if err != nil {
 		return err
 	}
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", conf.Grpc.Port))
+	fmt.Println(port, 324234)
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 		return err
