@@ -1,10 +1,10 @@
 package redis
 
 import (
-	"2108a/high-five/home/day12/framework/config"
 	"encoding/json"
 	"fmt"
 	"github.com/go-redis/redis/v8"
+	"github.com/kenny1S/framework/config"
 	"golang.org/x/net/context"
 	"time"
 )
