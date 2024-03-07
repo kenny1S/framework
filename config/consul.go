@@ -1,15 +1,11 @@
 package config
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/hashicorp/consul/api"
-	"github.com/kenny1S/framework/redis"
 	"net"
-	"strconv"
-	"time"
 )
 
 const Consul_Key = "consul_index"
@@ -75,38 +71,7 @@ func RegisterConsul(servername string, port int) error {
 	return nil
 }
 
-func getIndex(ctx context.Context, servername string, indexLen int) (int, error) {
-	exists, err := redis.Exists(ctx, servername, Consul_Key)
-	if err != nil {
-		return 0, err
-	}
-	if exists {
-		getRedis, err := redis.GetRedis(ctx, servername, Consul_Key)
-		if err != nil {
-			return 0, err
-		}
-		index, err := strconv.Atoi(getRedis)
-		if err != nil {
-			return 0, err
-		}
-		index += 1
-		if index >= indexLen {
-			index = 0
-		}
-		err = redis.SetKey(ctx, servername, Consul_Key, index, time.Minute*1)
-		if err != nil {
-			return 0, err
-		}
-		return index, nil
-	}
-	err = redis.SetKey(ctx, servername, Consul_Key, 0, time.Minute*1)
-	if err != nil {
-		return 0, err
-	}
-	return 0, nil
-}
-
-func AgentHealthService(ctx context.Context, servername string) (string, error) {
+func AgentHealthService(servername string) (string, error) {
 	config, err := getConfig(servername)
 	if err != nil {
 		return "", err
@@ -124,9 +89,8 @@ func AgentHealthService(ctx context.Context, servername string) (string, error) 
 	if name != "passing" {
 		return "", fmt.Errorf("is not health service")
 	}
-	index, err := getIndex(ctx, servername, len(i))
 	if err != nil {
 		return "", err
 	}
-	return fmt.Sprintf("%v:%v", i[index].Service.Address, i[index].Service.Port), nil
+	return fmt.Sprintf("%v:%v", i[0].Service.Address, i[0].Service.Port), nil
 }
